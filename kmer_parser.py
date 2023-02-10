@@ -81,6 +81,13 @@ def hash_kmer(kmer):
     return hashed_kmer
 
 def gap_kmer(kmers):
+    """ make gaps into each kmer inputed :
+    __ Args __ 
+    kmers_list (list) : 
+       
+    __ Returns __ 
+    list of possible gapped kmers (list)
+    """
     k_gap = []
     for kmer in kmers : 
         for z in range(0,len(kmer)) :
@@ -89,6 +96,19 @@ def gap_kmer(kmers):
     return k_gap
 
 def find_kmer(sequence, kmer_size, ngap, reduce = False):
+    """ identify all possible kmers in a given sequence:
+    __ Args __ 
+    sequence (Seq): AA sequence in single letter codification 
+    kmer_size (int) : size of kmers generated 
+    ngap (int) : number of gaps in each kmer
+    reduce (str/bool) : reduction and type of AA reduction 
+    
+    __ Returns __ 
+    
+    __ Save __ 
+    for each sequence record in a multifasta make a .kmr file saving all found kmer
+    
+    """
     kmers = []
     if reduce == True :
         sequence = reduce_seq(sequence)
