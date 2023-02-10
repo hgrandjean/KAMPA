@@ -23,39 +23,39 @@ print(os.getcwd())
 
 
 
-# reduce data complexity transforming AA by properties in the proteins 
-# uses data published by doi: 10.1186/s12859-019-3232-4
-reduction_dict = {
-    'R' : 'L' ,
-    'D' : 'L' ,
-    'E' : 'L' ,
-    'N' : 'L' ,
-    'Q' : 'L' ,
-    'K' : 'L' ,
-    'H' : 'L' ,
-    'L' : 'B' ,
-    'I' : 'B' ,
-    'V' : 'B' ,
-    'A' : 'B' ,
-    'M' : 'B' ,
-    'F' : 'B' ,
-    'S' : 'W' ,
-    'T' : 'W' ,
-    'Y' : 'W' ,
-    'W' : 'W' ,
-    'P' : 'P' ,
-    'G' : 'G' ,
-    'C' : 'C' ,
-    
-    "X" : 'B' , 
-    "U" : 'B' ,
-    "B" : 'B' , 
-    "O" : 'B' ,
-    "X" : 'B' ,
-    "Z" : 'B' ,
+# reduce AA sequence complexity using different set of in-vitro/sillico properties 
+# Reduction Encoding : 
+# RED1 : Hydrophobicity A= hydrophocic ; B = hydrophilic ; 
+# RED2 : Physiochemical   A= hydrophocic ; B = hydrophilic ; C = Aromatic ; D = Polar ; E = Acidic ; F = Basic ; G = Ionizable ; 
+# RED3 : Solvent accessibility ; A = Low ; B = Medium ; C = High
+# RED4 :  Hydrophobicity and charge; A = hydrophobic ; B = Hydrophilic : C = Charged
+# RED5 :  Hydrophobicity and structure;  A = Hydrophilic ; B = Hydrophobic : C = Structural
+
+
+reduction_dictionnaries = {  
+    'A' :['A','A','B','B','B'] ,
+    'C' :['B','G','A','A','A'] ,
+    'D' :['B','E','C','C','A'] ,
+    'E' : ['B','E','C','C','A'] ,
+    'F' : ['B','C','A','A','A'] ,
+    'G' : ['A','A','B','B','C'] ,
+    'H' : ['B','B','B','A','A'] ,
+    'I' : ['A','A','A','B','B'] ,
+    'K' : ['B','F','C','C','A'] ,
+    'L' : ['A','A','A','B','B'] ,
+    'M' : ['A','A','A','B','B'] ,
+    'N' : ['B','D','C','A','A'] ,
+    'P' : ['B','B','C','A','C'] ,
+    'Q' : ['B','D','C','A','A'] ,
+    'R' : ['B','F','C','C','A'] ,
+    'S' : ['B','D','B','A','A'] ,
+    'T' : ['B','D','B','A','A'] ,
+    'V' : ['A','A','A','B','B'] ,
+    'W' : ['B','-','A','A','A'] ,
+    'Y' : ['B','G','A','A','A'] ,
 }
 
-def reduce_seq(sequence, r_dict = reduction_dict):
+def reduce_seq(sequence , reduction_type = None , r_dict = reduction_dict):
     """ transform sequence using AA characteristics in proteins:
     __ Args __ 
     sequence (Seq): AA sequence in single letter codification 
@@ -66,7 +66,7 @@ def reduce_seq(sequence, r_dict = reduction_dict):
     """
     reduced_seq = ""
     for aa in sequence:
-        reduced_seq += r_dict[aa]
+        reduced_seq += r_dict[aa][reduction_type - 1]
     return reduced_seq 
 
 def hash_kmer(kmer):
